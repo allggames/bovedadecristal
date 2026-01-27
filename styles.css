@@ -94,3 +94,22 @@ main{position:relative;z-index:2;height:100vh;display:flex;align-items:center;ju
 .star:hover .facet {
   filter: brightness(1.1);
 }
+
+/* Estilos para las caras del diamante */
+.diamond-svg {
+    overflow: visible;
+    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+}
+
+.diamond-svg path {
+    stroke: #1a1e2e; /* Borde oscuro grueso como la imagen */
+    stroke-width: 2.5;
+    stroke-linejoin: round;
+}
+
+/* Facetas con los colores de la imagen */
+.f-base { fill: #74e7ff; }       /* Color principal */
+.f-light { fill: #b9f3ff; }      /* Reflejo claro superior */
+.f-mid { fill: #48d1f0; }        /* Sombra media */
+.f-dark { fill: #2bb5d4; }       /* Sombra profunda */
+.f-shine { fill: #ffffff; stroke: none !important; opacity: 0.8; } /* Brillo blanco */
