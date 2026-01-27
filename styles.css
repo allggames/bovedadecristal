@@ -72,3 +72,25 @@ main{position:relative;z-index:2;height:100vh;display:flex;align-items:center;ju
 #bottom-logo-container{position:fixed;bottom:20px;width:100%;display:flex;justify-content:center;z-index:10}
 #bottom-logo-container img{width:clamp(100px,15vw,200px)}
 .hide-until-bottom{display:none}
+
+.diamond-group {
+  stroke: #022c4d; /* El borde oscuro de la imagen */
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+
+.facet {
+  fill: #70d9f0; /* Color base */
+  transition: fill 0.3s;
+}
+
+/* Facetas superiores más claras */
+.facet-top { fill: #b3f2ff; }
+/* Facetas laterales intermedias */
+.facet-side { fill: #48c6e0; }
+/* Reflejo brillante */
+.facet-shine { fill: #ffffff; opacity: 0.8; }
+
+.star:hover .facet {
+  filter: brightness(1.1);
+}
