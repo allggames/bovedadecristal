@@ -7,21 +7,37 @@
     const LOAD_MS = 1500;
 
     function createSplashStars() {
-      const container = document.getElementById('splash-stars');
-      if (!container) return;
-      container.innerHTML = '';
-      for (let i=0; i<STAR_COUNT; i++){
-        const s = document.createElement('div');
-        s.className = 'splash-star';
-        s.textContent = '💎';
-        s.style.left = (Math.random() * 100) + '%';
-        s.style.top = (Math.random() * 100) + '%';
-        s.style.fontSize = (10 + Math.random()*20) + 'px';
-        s.style.animationDuration = (4 + Math.random()*4) + 's';
-        s.style.opacity = Math.random();
-        container.appendChild(s);
-      }
-    }
+  const container = document.getElementById('splash-stars');
+  if (!container) return;
+  container.innerHTML = '';
+  
+  const STAR_COUNT = 40; // Un poco más de gemas para llenar la pantalla
+
+  for (let i = 0; i < STAR_COUNT; i++) {
+    const s = document.createElement('div');
+    s.className = 'splash-star';
+    s.textContent = '💎';
+    
+    // Dispersión aleatoria por TODA la pantalla
+    const randomX = Math.floor(Math.random() * 100);
+    const randomY = Math.floor(Math.random() * 100);
+    
+    s.style.left = randomX + '%';
+    s.style.top = randomY + '%';
+    
+    // Variedad de tamaños y velocidades
+    const size = 10 + Math.random() * 25;
+    const duration = 3 + Math.random() * 5;
+    const delay = Math.random() * 2;
+    
+    s.style.fontSize = size + 'px';
+    s.style.animationDuration = duration + 's';
+    s.style.animationDelay = delay + 's';
+    s.style.opacity = (0.4 + Math.random() * 0.6).toFixed(2);
+    
+    container.appendChild(s);
+  }
+}
 
     function runLoaderThenHide() {
       const progress = document.getElementById('loading-progress');
