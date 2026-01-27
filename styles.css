@@ -173,26 +173,70 @@ main {
   50% { transform: translateY(-15px) rotate(10deg); }
 }
 
+/* --- HEADER Y TÍTULO --- */
 .page-header {
   position: fixed;
-  top: 40px; /* Ajusta la distancia desde arriba */
+  top: 20px; /* Más arriba en el celu */
   left: 0;
   width: 100%;
-  z-index: 10; /* Mayor que el fondo (0) y el main (2) */
-  pointer-events: none; /* Permite clickear lo que hay debajo */
-  display: flex;
-  justify-content: center;
-  padding: 0 20px;
+  z-index: 100;
+  padding: 0 15px;
+  pointer-events: none;
 }
 
 .page-header h1 {
   margin: 0;
   color: #ffffff;
   font-weight: 800;
-  font-size: clamp(16px, 4vw, 28px); /* Tamaño responsivo */
+  /* Tamaño de fuente ajustable: más chico en el celu */
+  font-size: clamp(14px, 5vw, 24px); 
   text-align: center;
   text-transform: uppercase;
-  letter-spacing: 1px;
-  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.8), 0 0 20px rgba(116, 231, 255, 0.4);
-  pointer-events: auto;
+  line-height: 1.2;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.8), 0 0 15px rgba(116, 231, 255, 0.5);
+}
+
+/* --- CONTENEDOR DE DIAMANTES --- */
+.stars {
+  display: flex;
+  flex-direction: row; /* Horizontal por defecto */
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 20px;
+}
+
+/* --- MEDIA QUERY PARA CELULARES --- */
+@media (max-width: 600px) {
+  .stars {
+    flex-direction: column; /* Se ponen uno debajo del otro */
+    gap: 10px;
+    padding-top: 80px; /* Espacio para que el título no los tape */
+  }
+
+  .star {
+    /* Diamantes un poco más chicos en el celu para que entren los 3 */
+    width: 140px; 
+    height: 140px;
+  }
+
+  .white-halo {
+    width: 130px;
+    height: 130px;
+  }
+}
+
+/* --- ARREGLO PARA EL LOGO INFERIOR --- */
+#bottom-logo-container {
+  position: fixed;
+  bottom: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  z-index: 50;
+}
+
+#bottom-logo-container img {
+  width: 100px; /* Más discreto en el celu */
 }
