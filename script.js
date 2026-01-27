@@ -79,15 +79,27 @@
 
   /* --- UI SETUP --- */
   function setupDiamonds() {
-    const items = document.querySelectorAll('.star');
-    const d = makeDiamondPath(60, 60, 70, 95); // Proporción de diamante
-    items.forEach(btn => {
-      const svg = btn.querySelector('.star-svg');
-      if (svg) {
-        svg.querySelectorAll('.halo, .body, .rim').forEach(path => path.setAttribute('d', d));
-      }
-    });
-  }
+  const containers = document.querySelectorAll('.diamond-group');
+  
+  // Coordenadas para un diamante de estilo "brillante"
+  // Puntos: Top-Left (30,40), Top-Right (90,40), Bottom (60,100), etc.
+  const drawDiamond = `
+    <path class="facet" d="M 30 40 L 60 100 L 60 40 Z" fill="#29b6f6" />
+    <path class="facet-side" d="M 90 40 L 60 100 L 60 40 Z" />
+    <path class="facet" d="M 15 40 L 60 100 L 30 40 Z" fill="#0288d1" />
+    <path class="facet" d="M 105 40 L 60 100 L 90 40 Z" fill="#0288d1" />
+    
+    <path class="facet-top" d="M 30 40 L 90 40 L 75 20 L 45 20 Z" />
+    <path class="facet-side" d="M 15 40 L 30 40 L 45 20 Z" />
+    <path class="facet-side" d="M 105 40 L 90 40 L 75 20 Z" />
+    
+    <path class="facet-shine" d="M 35 25 L 45 25 L 40 35 Z" />
+  `;
+
+  containers.forEach(container => {
+    container.innerHTML = drawDiamond;
+  });
+}
 
   function explodeConfetti() {
     const container = document.getElementById('confetti');
