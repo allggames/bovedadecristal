@@ -73,24 +73,24 @@
 
   /* --- UI SETUP: DIBUJO DE LOS 3 DIAMANTES --- */
   function setupDiamonds() {
-    // CORRECCIÓN: Usamos el selector correcto para los 3 SVGs
     const svgs = document.querySelectorAll('.diamond-svg');
     
-    // Geometría detallada del diamante
+    // Geometría detallada del diamante (Facetas)
     const diamondHTML = `
-        <path class="f-mid" d="M 20 45 L 60 105 L 40 45 Z" />
-        <path class="f-base" d="M 40 45 L 60 105 L 80 45 Z" />
-        <path class="f-mid" d="M 80 45 L 60 105 L 100 45 Z" />
-        <path class="f-dark" d="M 10 45 L 60 105 L 20 45 Z" />
-        <path class="f-dark" d="M 110 45 L 60 105 L 100 45 Z" />
-        <path class="f-light" d="M 30 15 L 90 15 L 100 45 L 80 45 L 40 45 L 20 45 L 10 45 Z" />
-        <path class="f-base" d="M 30 15 L 90 15 L 80 45 L 40 45 Z" />
-        <path class="f-light" d="M 30 15 L 40 45 L 20 45 Z" />
-        <path class="f-light" d="M 90 15 L 100 45 L 80 45 Z" />
-        <path class="f-shine" d="M 25 25 L 32 30 L 25 35 L 18 30 Z" />
+        <g transform="translate(0, 5)">
+            <path class="f-mid" d="M 20 45 L 60 105 L 40 45 Z" />
+            <path class="f-base" d="M 40 45 L 60 105 L 80 45 Z" />
+            <path class="f-mid" d="M 80 45 L 60 105 L 100 45 Z" />
+            <path class="f-dark" d="M 10 45 L 60 105 L 20 45 Z" />
+            <path class="f-dark" d="M 110 45 L 60 105 L 100 45 Z" />
+            <path class="f-light" d="M 30 15 L 90 15 L 100 45 L 20 45 L 10 45 Z" />
+            <path class="f-base" d="M 30 15 L 90 15 L 80 45 L 40 45 Z" />
+            <path class="f-light" d="M 30 15 L 40 45 L 20 45 Z" />
+            <path class="f-light" d="M 90 15 L 100 45 L 80 45 Z" />
+            <path class="f-shine" d="M 25 25 L 32 30 L 25 35 L 18 30 Z" />
+        </g>
     `;
 
-    // CORRECCIÓN: Iteramos sobre cada SVG para inyectar el dibujo
     svgs.forEach(svg => {
       svg.innerHTML = diamondHTML;
     });
@@ -118,14 +118,15 @@
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-    setupDiamonds(); // Se ejecuta para los 3 diamantes
+    setupDiamonds(); 
     const buttons = document.querySelectorAll('.star');
     const assignments = loadOrCreateAssignments(buttons.length);
     const selection = JSON.parse(localStorage.getItem(SELECT_KEY));
     let locked = selection && selection.date === todayKey();
 
     if (locked) {
-      document.getElementById('prize-text').textContent = selection.prize.label;
+      const prizeText = document.getElementById('prize-text');
+      if(prizeText) prizeText.textContent = selection.prize.label;
       document.getElementById('result').classList.remove('hidden');
       document.getElementById('result').classList.add('show');
     }
@@ -157,7 +158,7 @@
     setTimeout(() => document.body.classList.remove('dropping'), 100);
   });
 
-  /* --- CANVAS FONDO --- */
+  /* --- CANVAS FONDO (AMBIENTE CUEVA) --- */
   const canvas = document.getElementById('sky');
   if (canvas) {
     const ctx = canvas.getContext('2d');
@@ -165,14 +166,22 @@
     const resize = () => { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; };
     window.addEventListener('resize', resize);
     resize();
-    const stars = Array.from({length: 100}, () => ({ x: Math.random()*w, y: Math.random()*h, r: Math.random()*1.5, o: Math.random() }));
+    const stars = Array.from({length: 80}, () => ({ x: Math.random()*w, y: Math.random()*h, r: Math.random()*2, o: Math.random() }));
     const draw = () => {
-      ctx.clearRect(0,0,w,h);
+      // Usamos el color de fondo de la cueva profunda
+      ctx.fillStyle = '#020811'; 
+      ctx.fillRect(0,0,w,h);
       stars.forEach(s => {
         ctx.fillStyle = `rgba(179, 229, 252, ${s.o})`;
-        ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI*2); ctx.fill();
-        s.o += (Math.random()-0.5)*0.05;
-        s.o = Math.max(0.1, Math.min(1, s.o));
+        ctx.beginPath(); 
+        // Dibujamos pequeños cristales (rombos) en vez de círculos
+        ctx.moveTo(s.x, s.y - s.r);
+        ctx.lineTo(s.x + s.r, s.y);
+        ctx.lineTo(s.x, s.y + s.r);
+        ctx.lineTo(s.x - s.r, s.y);
+        ctx.fill();
+        s.o += (Math.random()-0.5)*0.02;
+        s.o = Math.max(0.1, Math.min(0.7, s.o));
       });
       requestAnimationFrame(draw);
     };
