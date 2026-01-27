@@ -79,7 +79,7 @@
 
   /* --- UI SETUP --- */
   function setupDiamonds() {
-  const containers = document.querySelectorAll('.diamond-group');
+  const svgs = document.querySelectorAll('.diamond-svg');
   
   // Coordenadas para un diamante de estilo "brillante"
   // Puntos: Top-Left (30,40), Top-Right (90,40), Bottom (60,100), etc.
