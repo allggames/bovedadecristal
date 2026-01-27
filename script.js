@@ -1,12 +1,6 @@
 (function () {
   'use strict';
 
-  /* --- GEOMETRÍA DEL DIAMANTE --- */
-  function makeDiamondPath(cx, cy, w, h) {
-    // Un diamante es un rombo simple pero elegante
-    return `M ${cx} ${cy - h/2} L ${cx + w/2} ${cy} L ${cx} ${cy + h/2} L ${cx - w/2} ${cy} Z`;
-  }
-
   /* --- SPLASH LOADER --- */
   (function splashInit() {
     const STAR_COUNT = 30;
@@ -19,7 +13,7 @@
       for (let i=0; i<STAR_COUNT; i++){
         const s = document.createElement('div');
         s.className = 'splash-star';
-        s.textContent = '💎'; // Ahora diamantes en el splash
+        s.textContent = '💎';
         s.style.left = (Math.random() * 100) + '%';
         s.style.top = (Math.random() * 100) + '%';
         s.style.fontSize = (10 + Math.random()*20) + 'px';
@@ -77,29 +71,30 @@
     return assigned;
   }
 
-  /* --- UI SETUP --- */
+  /* --- UI SETUP: DIBUJO DE LOS 3 DIAMANTES --- */
   function setupDiamonds() {
-  const svgs = document.querySelectorAll('.diamond-svg');
-  
-  // Coordenadas para un diamante de estilo "brillante"
-  // Puntos: Top-Left (30,40), Top-Right (90,40), Bottom (60,100), etc.
-  const drawDiamond = `
-    <path class="facet" d="M 30 40 L 60 100 L 60 40 Z" fill="#29b6f6" />
-    <path class="facet-side" d="M 90 40 L 60 100 L 60 40 Z" />
-    <path class="facet" d="M 15 40 L 60 100 L 30 40 Z" fill="#0288d1" />
-    <path class="facet" d="M 105 40 L 60 100 L 90 40 Z" fill="#0288d1" />
+    // CORRECCIÓN: Usamos el selector correcto para los 3 SVGs
+    const svgs = document.querySelectorAll('.diamond-svg');
     
-    <path class="facet-top" d="M 30 40 L 90 40 L 75 20 L 45 20 Z" />
-    <path class="facet-side" d="M 15 40 L 30 40 L 45 20 Z" />
-    <path class="facet-side" d="M 105 40 L 90 40 L 75 20 Z" />
-    
-    <path class="facet-shine" d="M 35 25 L 45 25 L 40 35 Z" />
-  `;
+    // Geometría detallada del diamante
+    const diamondHTML = `
+        <path class="f-mid" d="M 20 45 L 60 105 L 40 45 Z" />
+        <path class="f-base" d="M 40 45 L 60 105 L 80 45 Z" />
+        <path class="f-mid" d="M 80 45 L 60 105 L 100 45 Z" />
+        <path class="f-dark" d="M 10 45 L 60 105 L 20 45 Z" />
+        <path class="f-dark" d="M 110 45 L 60 105 L 100 45 Z" />
+        <path class="f-light" d="M 30 15 L 90 15 L 100 45 L 80 45 L 40 45 L 20 45 L 10 45 Z" />
+        <path class="f-base" d="M 30 15 L 90 15 L 80 45 L 40 45 Z" />
+        <path class="f-light" d="M 30 15 L 40 45 L 20 45 Z" />
+        <path class="f-light" d="M 90 15 L 100 45 L 80 45 Z" />
+        <path class="f-shine" d="M 25 25 L 32 30 L 25 35 L 18 30 Z" />
+    `;
 
-  containers.forEach(container => {
-    container.innerHTML = drawDiamond;
-  });
-}
+    // CORRECCIÓN: Iteramos sobre cada SVG para inyectar el dibujo
+    svgs.forEach(svg => {
+      svg.innerHTML = diamondHTML;
+    });
+  }
 
   function explodeConfetti() {
     const container = document.getElementById('confetti');
@@ -123,7 +118,7 @@
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-    setupDiamonds();
+    setupDiamonds(); // Se ejecuta para los 3 diamantes
     const buttons = document.querySelectorAll('.star');
     const assignments = loadOrCreateAssignments(buttons.length);
     const selection = JSON.parse(localStorage.getItem(SELECT_KEY));
@@ -162,7 +157,7 @@
     setTimeout(() => document.body.classList.remove('dropping'), 100);
   });
 
-  /* --- CANVAS FONDO (ESTRELLAS LEJANAS) --- */
+  /* --- CANVAS FONDO --- */
   const canvas = document.getElementById('sky');
   if (canvas) {
     const ctx = canvas.getContext('2d');
