@@ -1,115 +1,148 @@
-:root{
-  --bg-top: #020b16;
-  --bg-mid: #041221;
-  --bg-bot: #05192d;
-  --diamond-blue: #b3e5fc;
-  --gold-1: #ffffff; /* Plateado para el modal */
-  --gold-2: #e1f5fe;
-  --gold-3: #81d4fa;
+:root {
+  /* Temática Reserva de Cristal */
+  --bg-deep: #020811;
+  --bg-glow: #0a1f33;
+  --diamond-main: #74e7ff;
+  --diamond-border: #1a1e2e;
+  --aura-glow: rgba(179, 229, 252, 0.2);
+  
+  /* Modal Plateado */
+  --modal-bg: linear-gradient(180deg, #ffffff 0%, #e1f5fe 60%, #81d4fa 100%);
   --modal-text: #01579b;
   --modal-radius: 18px;
 }
 
-*{box-sizing:border-box}
-html,body{height:100%;margin:0;padding:0}
-body{
-  background: linear-gradient(180deg,var(--bg-top) 0%,var(--bg-mid) 50%,var(--bg-bot) 100%);
-  color:#fff;
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; padding: 0; }
+
+body {
+  /* Fondo de cueva profunda */
+  background: radial-gradient(circle at center, var(--bg-glow) 0%, var(--bg-deep) 100%);
+  color: #fff;
   font-family: "Lexend", sans-serif;
-  text-align:center;
-  overflow:hidden;
+  text-align: center;
+  overflow: hidden;
 }
 
-.page-header{ position:fixed; top:70px; left:50%; transform:translateX(-50%); z-index:9; pointer-events:none; }
-.page-header h1{ margin:0; font-weight:800; font-size: clamp(20px, 3vw, 32px); text-shadow: 0 4px 15px rgba(0,0,0,0.5); }
-
-#sky{position:fixed;inset:0;width:100%;height:100%;z-index:0}
-
-main{position:relative;z-index:2;height:100vh;display:flex;align-items:center;justify-content:center;pointer-events:none}
-.stars{display:flex;gap:clamp(1rem, 5vw, 4rem);pointer-events:auto;align-items:center}
-
-.star{
-  background:transparent;border:0;padding:0;
-  width:clamp(120px, 22vw, 280px); height:clamp(160px, 30vw, 340px);
-  position:relative;cursor:pointer;pointer-events:auto;
+/* --- CONTENEDOR PRINCIPAL --- */
+main {
+  position: relative;
+  z-index: 2;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.dropping .star{transform:translateY(-120vh);transition:transform .9s cubic-bezier(.22,.9,.3,1)}
-.final-1{transform:translateY(10px) scale(0.95); transition-delay:.2s}
-.final-2{transform:translateY(0) scale(1.2); transition-delay:.1s}
-.final-3{transform:translateY(10px) scale(0.95); transition-delay:.3s}
-
-.star-inner{width:100%;height:100%;transform-style:preserve-3d;transition:transform .7s;display:flex;align-items:center;justify-content:center}
-.star.flip .star-inner{transform:rotateY(180deg)}
-
-.star-svg{width:90%;height:90%;overflow:visible}
-.white-halo{fill:#fff;opacity:0.15;filter:blur(10px)}
-.halo{fill:var(--diamond-blue);opacity:.6;filter:url(#haloBlur)}
-.body{fill:url(#gradA); stroke:rgba(255,255,255,0.4); stroke-width:0.5}
-.rim{fill:none;stroke:rgba(255,255,255,0.6);stroke-width:3;stroke-linejoin:round}
-
-.ground-shadow{position:absolute;bottom:5%;left:50%;transform:translateX(-50%);width:70%;height:15px;background:radial-gradient(ellipse,rgba(0,0,0,0.4),transparent);filter:blur(8px)}
-
-@keyframes pop{0%{transform:scale(1)}50%{transform:scale(1.15)}100%{transform:scale(1.05)}}
-.star.pop .star-svg{animation:pop .5s forwards}
-
-.modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:1000}
-.modal .modal-content{
-  pointer-events:auto; width:min(90vw,400px); padding:24px; border-radius:var(--modal-radius);
-  background: linear-gradient(180deg, var(--gold-1) 0%, var(--gold-2) 60%, var(--gold-3) 100%);
-  color: var(--modal-text); box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-  transform: scale(0.8); opacity:0; transition: all .3s cubic-bezier(.17,.67,.41,1.18);
+.stars {
+  display: flex;
+  gap: clamp(1rem, 8vw, 5rem);
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
 }
-.modal.show .modal-content{ transform: scale(1); opacity:1 }
 
-.btn-primary{ margin-top:15px; padding:10px 25px; border-radius:50px; border:0; background:#01579b; color:#fff; font-weight:700; cursor:pointer; }
+/* --- EL DIAMANTE Y SU AURA --- */
+.star {
+  background: transparent;
+  border: none;
+  padding: 0;
+  width: clamp(140px, 25vw, 280px);
+  height: clamp(140px, 25vw, 280px);
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+}
 
-#splash{position:fixed;inset:0;z-index:9999;background:#010a14;display:flex;align-items:center;justify-content:center;transition:opacity .5s}
-#splash.hidden{opacity:0;pointer-events:none}
-.splash-star{position:absolute;animation:float linear infinite}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-15px)}}
+/* El círculo (aura) centrado exactamente detrás */
+.white-halo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Centrado absoluto */
+  width: 110%; /* Un poco más grande que el diamante */
+  height: 110%;
+  background: radial-gradient(circle, var(--aura-color, rgba(179,229,252,0.3)) 0%, transparent 70%);
+  border-radius: 50%;
+  z-index: -1;
+  pointer-events: none;
+  filter: blur(5px);
+}
 
-#bottom-logo-container{position:fixed;bottom:20px;width:100%;display:flex;justify-content:center;z-index:10}
-#bottom-logo-container img{width:clamp(100px,15vw,200px)}
-.hide-until-bottom{display:none}
+.diamond-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 10px 20px rgba(0,0,0,0.4));
+  z-index: 2;
+}
 
-.diamond-group {
-  stroke: #022c4d; /* El borde oscuro de la imagen */
-  stroke-width: 2;
+/* --- ANIMACIONES DE CAÍDA Y POP --- */
+.dropping .star { transform: translateY(-120vh); }
+.final-1 { transition: transform .9s cubic-bezier(.22,.9,.3,1) .2s; }
+.final-2 { transform: scale(1.2); transition: transform .9s cubic-bezier(.22,.9,.3,1) .1s; }
+.final-3 { transition: transform .9s cubic-bezier(.22,.9,.3,1) .3s; }
+
+@keyframes pop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1.05); }
+}
+.star.pop .diamond-svg { animation: pop .5s forwards; }
+
+/* --- FACETAS DEL DIAMANTE (Colores de imagen) --- */
+.diamond-svg path {
+  stroke: var(--diamond-border);
+  stroke-width: 2.5;
   stroke-linejoin: round;
 }
 
-.facet {
-  fill: #70d9f0; /* Color base */
-  transition: fill 0.3s;
+.f-base { fill: #74e7ff; }
+.f-light { fill: #b9f3ff; }
+.f-mid { fill: #48d1f0; }
+.f-dark { fill: #2bb5d4; }
+.f-shine { fill: #ffffff; stroke: none !important; opacity: 0.8; }
+
+/* --- MODAL Y OTROS --- */
+.modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  pointer-events: none;
 }
 
-/* Facetas superiores más claras */
-.facet-top { fill: #b3f2ff; }
-/* Facetas laterales intermedias */
-.facet-side { fill: #48c6e0; }
-/* Reflejo brillante */
-.facet-shine { fill: #ffffff; opacity: 0.8; }
-
-.star:hover .facet {
-  filter: brightness(1.1);
+.modal .modal-content {
+  pointer-events: auto;
+  width: min(90vw, 400px);
+  padding: 24px;
+  border-radius: var(--modal-radius);
+  background: var(--modal-bg);
+  color: var(--modal-text);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  transform: scale(0.8);
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(.17,.67,.41,1.18);
 }
 
-/* Estilos para las caras del diamante */
-.diamond-svg {
-    overflow: visible;
-    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+.modal.show .modal-content { transform: scale(1); opacity: 1; }
+
+.btn-primary {
+  margin-top: 15px;
+  padding: 10px 25px;
+  border-radius: 50px;
+  border: none;
+  background: #01579b;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
 }
 
-.diamond-svg path {
-    stroke: #1a1e2e; /* Borde oscuro grueso como la imagen */
-    stroke-width: 2.5;
-    stroke-linejoin: round;
-}
-
-/* Facetas con los colores de la imagen */
-.f-base { fill: #74e7ff; }       /* Color principal */
-.f-light { fill: #b9f3ff; }      /* Reflejo claro superior */
-.f-mid { fill: #48d1f0; }        /* Sombra media */
-.f-dark { fill: #2bb5d4; }       /* Sombra profunda */
-.f-shine { fill: #ffffff; stroke: none !important; opacity: 0.8; } /* Brillo blanco */
+#sky { position: fixed; inset: 0; z-index: 0; }
+#splash { position: fixed; inset: 0; z-index: 9999; background: #010a14; display: flex; align-items: center; justify-content: center; }
+#splash.hidden { opacity: 0; visibility: hidden; transition: 0.5s; }
