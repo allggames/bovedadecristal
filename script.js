@@ -39,29 +39,27 @@
   }
 }
 
-    function runLoaderThenHide() {
-      const progress = document.getElementById('loading-progress');
-      const splash = document.getElementById('splash');
-      if (!progress || !splash) return;
-      const start = performance.now();
-      function tick(now) {
-        const t = Math.min(1, (now - start) / LOAD_MS);
-        progress.style.width = (t * 100) + '%';
-        if (t < 1) requestAnimationFrame(tick);
-        else {
-          setTimeout(() => {
-            splash.classList.add('hidden');
-            const logo = document.getElementById('logo');
-            const container = document.getElementById('bottom-logo-container');
-            if (logo && container) {
-              logo.classList.remove('hide-until-bottom');
-              container.appendChild(logo);
-            }
-          }, 300);
-        }
-      }
-      requestAnimationFrame(tick);
+    // Busca esta parte dentro de tu script.js y límpiala
+function runLoaderThenHide() {
+  const progress = document.getElementById('loading-progress');
+  const splash = document.getElementById('splash');
+  if (!progress || !splash) return;
+
+  const start = performance.now();
+  function tick(now) {
+    const t = Math.min(1, (now - start) / 1500);
+    progress.style.width = (t * 100) + '%';
+
+    if (t < 1) requestAnimationFrame(tick);
+    else {
+      setTimeout(() => {
+        splash.classList.add('hidden');
+        // --- BORRAMOS TODA LA PARTE DE "placeBottomLogo" O "appendChild(logo)" ---
+      }, 300);
     }
+  }
+  requestAnimationFrame(tick);
+}
 
     document.addEventListener('DOMContentLoaded', () => {
       createSplashStars();
