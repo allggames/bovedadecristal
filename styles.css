@@ -240,3 +240,20 @@ main {
 #bottom-logo-container img {
   width: 100px; /* Más discreto en el celu */
 }
+
+/* Splash content: que no estire hijos */
+#splash-content{
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* evita que el logo se estire a lo ancho */
+  justify-content: center;
+}
+
+/* Logo responsivo controlado */
+#logo2{
+  width: clamp(140px, 45vw, 260px); /* min, responsive, max */
+  max-width: 80vw;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
