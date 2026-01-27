@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Elige un diamante</title>
+  <title>Reserva de Cristal - Elige un diamante</title>
   <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -15,7 +15,7 @@
     <div id="splash-content" role="dialog" aria-label="Pantalla de carga">
       <img id="logo2" src="images/logo2.png" alt="logo2" />
       <div id="loading-wrap" aria-hidden="true">
-        <div id="loading-label">Cargando diamantes...</div>
+        <div id="loading-label">Abriendo la reserva de cristal...</div>
         <div id="loading-bar">
           <div id="loading-progress" style="width:0%"></div>
         </div>
@@ -30,49 +30,24 @@
   <main>
     <img id="logo" src="images/logo.png" alt="logo" class="hide-until-bottom" />
 
-   <div class="stars" role="list" aria-label="Elige un diamante">
-  <button class="star final-1" data-index="0" aria-label="Diamante izquierdo">
-    <div class="star-inner">
-      <svg viewBox="0 0 120 120" class="star-svg diamond-svg" xmlns="http://www.w3.org/2000/svg"></svg>
-      <div class="ground-shadow"></div>
-    </div>
-  </button>
-
-  <button class="star final-2" data-index="1" aria-label="Diamante central">
-    <div class="star-inner">
-      <svg viewBox="0 0 120 120" class="star-svg diamond-svg" xmlns="http://www.w3.org/2000/svg"></svg>
-      <div class="ground-shadow"></div>
-    </div>
-  </button>
-
-  <button class="star final-3" data-index="2" aria-label="Diamante derecho">
-    <div class="star-inner">
-      <svg viewBox="0 0 120 120" class="star-svg diamond-svg" xmlns="http://www.w3.org/2000/svg"></svg>
-      <div class="ground-shadow"></div>
-    </div>
-  </button>
-</div>
+    <div class="stars" role="list" aria-label="Elige un diamante">
+      <button class="star final-1" data-index="0" aria-label="Diamante izquierdo" role="listitem">
+        <div class="star-inner">
+          <div class="white-halo"></div> <svg viewBox="0 0 120 120" class="star-svg diamond-svg" xmlns="http://www.w3.org/2000/svg"></svg>
+          <div class="ground-shadow"></div>
+        </div>
+      </button>
 
       <button class="star final-2" data-index="1" aria-label="Diamante central" role="listitem">
-        <div class="star-inner" aria-hidden="true">
-          <svg viewBox="0 0 120 120" class="star-svg" xmlns="http://www.w3.org/2000/svg" overflow="visible">
-            <ellipse class="white-halo" cx="60" cy="60" rx="40" ry="40" />
-            <path class="halo" d=""></path>
-            <path class="body" d=""></path>
-            <path class="rim" d=""></path>
-          </svg>
+        <div class="star-inner">
+          <div class="white-halo"></div> <svg viewBox="0 0 120 120" class="star-svg diamond-svg" xmlns="http://www.w3.org/2000/svg"></svg>
           <div class="ground-shadow"></div>
         </div>
       </button>
 
       <button class="star final-3" data-index="2" aria-label="Diamante derecho" role="listitem">
-        <div class="star-inner" aria-hidden="true">
-          <svg viewBox="0 0 120 120" class="star-svg" xmlns="http://www.w3.org/2000/svg" overflow="visible">
-            <ellipse class="white-halo" cx="60" cy="60" rx="40" ry="40" />
-            <path class="halo" d=""></path>
-            <path class="body" d=""></path>
-            <path class="rim" d=""></path>
-          </svg>
+        <div class="star-inner">
+          <div class="white-halo"></div> <svg viewBox="0 0 120 120" class="star-svg diamond-svg" xmlns="http://www.w3.org/2000/svg"></svg>
           <div class="ground-shadow"></div>
         </div>
       </button>
@@ -91,20 +66,6 @@
   </main>
 
   <footer id="bottom-logo-container" aria-hidden="true"></footer>
-
-  <svg width="0" height="0" style="position:absolute;pointer-events:none" aria-hidden="true">
-    <defs>
-      <filter id="haloBlur" x="-200%" y="-200%" width="500%" height="500%" filterUnits="userSpaceOnUse">
-        <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="g"/>
-        <feMerge><feMergeNode in="g"/><feMergeNode in="SourceGraphic"/></feMerge>
-      </filter>
-      <linearGradient id="gradA" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#ffffff"/>
-        <stop offset="60%" stop-color="#4fc3f7"/>
-        <stop offset="100%" stop-color="#0288d1"/>
-      </linearGradient>
-    </defs>
-  </svg>
 
   <audio id="claim-sound" preload="auto" aria-hidden="true">
     <source src="sound/claim.mp3" type="audio/mpeg">
