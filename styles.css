@@ -115,10 +115,15 @@ main {
   justify-content: center;
   z-index: 1000;
   pointer-events: none;
+  visibility: hidden; /* <-- ESTO ES CLAVE: Lo oculta de verdad */
+}
+
+.modal.show {
+  visibility: visible; /* <-- Lo vuelve a mostrar cuando ganan */
 }
 
 .modal .modal-content {
-  pointer-events: none; /* Ahora nadie lo puede tocar mientras sea invisible */
+  pointer-events: none; /* <-- Desactiva los clics mientras está invisible */
   width: min(90vw, 400px);
   padding: 24px;
   border-radius: var(--modal-radius);
@@ -133,7 +138,7 @@ main {
 .modal.show .modal-content { 
   transform: scale(1); 
   opacity: 1; 
-  pointer-events: auto; /* Recién se puede tocar cuando aparece */
+  pointer-events: auto; /* <-- Reactiva el botón verde SOLO cuando el cartel ya se ve */
 }
 
 .btn-primary {
