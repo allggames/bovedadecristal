@@ -141,6 +141,17 @@ function runLoaderThenHide() {
     if (locked) {
       const prizeText = document.getElementById('prize-text');
       if(prizeText) prizeText.textContent = selection.prize.label;
+      
+      // --- NUEVO: Mostrar fecha y hora guardada ---
+      const dateEl = document.getElementById('prize-date');
+      if(dateEl && selection.timeString) {
+          dateEl.textContent = `Reclamado el ${selection.timeString}`;
+          dateEl.removeAttribute('aria-hidden');
+          dateEl.style.display = 'block';
+          dateEl.style.marginBottom = '15px';
+          dateEl.style.fontSize = '14px';
+      }
+
       document.getElementById('result').classList.remove('hidden');
       document.getElementById('result').classList.add('show');
     }
@@ -155,14 +166,49 @@ function runLoaderThenHide() {
         
         setTimeout(() => {
           const prize = assignments[idx];
-          localStorage.setItem(SELECT_KEY, JSON.stringify({date:todayKey(), prize}));
+          
+          // --- NUEVO: Generar fecha y hora exacta ---
+          const now = new Date();
+          const timeString = `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()} a las ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')} hs`;
+
+          // Guardamos también la hora en el localStorage
+          localStorage.setItem(SELECT_KEY, JSON.stringify({date:todayKey(), prize, timeString}));
           document.getElementById('prize-text').textContent = prize.label;
+          
+          // Imprimimos la fecha y hora en el cartel
+          const dateEl = document.getElementById('prize-date');
+          if(dateEl) {
+              dateEl.textContent = `Reclamado el ${timeString}`;
+              dateEl.removeAttribute('aria-hidden');
+              dateEl.style.display = 'block';
+              dateEl.style.marginBottom = '15px';
+              dateEl.style.fontSize = '14px';
+          }
+
           document.getElementById('result').classList.remove('hidden');
           document.getElementById('result').classList.add('show');
           explodeConfetti();
         }, 700);
       });
     });
+
+    // --- NUEVO: REDIRECCIÓN Y ESTILO DEL BOTÓN ---
+    const closeBtn = document.getElementById('close-btn');
+    if (closeBtn) {
+      closeBtn.innerHTML = 'RECLAMAR PREMIO 📸<br><small style="font-size:0.7em;font-weight:normal;">Capturá y tocá acá</small>';
+      closeBtn.style.backgroundColor = '#073b12'; 
+      closeBtn.style.color = '#ffffff';
+      closeBtn.style.border = '2px solid #fff';
+      closeBtn.style.lineHeight = '1.2';
+      
+      // Borramos la lógica de cerrar y le ponemos la de redirigir
+      closeBtn.addEventListener('click', () => {
+        window.location.href = "https://www.casinoatenea.com/?open=true";
+      });
+    }
+
+    setTimeout(() => document.body.classList.remove('dropping'), 100);
+  });
 
     document.getElementById('close-btn').addEventListener('click', () => {
       document.getElementById('result').classList.remove('show');
