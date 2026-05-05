@@ -79,7 +79,7 @@ function runLoaderThenHide() {
       const parsed = JSON.parse(raw);
       if (parsed.date === today) return parsed.assignments;
     }
-    const prizes = [{label:'100% DE BONO + 1000 FICHAS'}, {label:'150% DE BONO + 1000 FICHAS'}, {label:'200% DE BONO + 1000 FICHAS'}];
+    const prizes = [{label:'100% DE BONO👀✨'}, {label:'150% DE BONO🤯✨'}, {label:'200% DE BONO🙌🏽✨'}];
     const assigned = prizes.sort(() => Math.random() - 0.5);
     localStorage.setItem(ASSIGN_KEY, JSON.stringify({date:today, assignments:assigned}));
     return assigned;
