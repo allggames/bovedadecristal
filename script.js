@@ -192,7 +192,7 @@ function runLoaderThenHide() {
       });
     });
 
-    // --- NUEVO: REDIRECCIÓN Y ESTILO DEL BOTÓN ---
+// --- NUEVO: REDIRECCIÓN Y ESTILO DEL BOTÓN ---
     const closeBtn = document.getElementById('close-btn');
     if (closeBtn) {
       closeBtn.innerHTML = 'RECLAMAR PREMIO 📸<br><small style="font-size:0.7em;font-weight:normal;">Capturá y tocá acá</small>';
@@ -206,14 +206,6 @@ function runLoaderThenHide() {
         window.location.href = "https://www.casinoatenea.com/?open=true";
       });
     }
-
-    setTimeout(() => document.body.classList.remove('dropping'), 100);
-  });
-
-    document.getElementById('close-btn').addEventListener('click', () => {
-      document.getElementById('result').classList.remove('show');
-      setTimeout(() => document.getElementById('result').classList.add('hidden'), 300);
-    });
 
     setTimeout(() => document.body.classList.remove('dropping'), 100);
   });
