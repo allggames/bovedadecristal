@@ -118,7 +118,7 @@ main {
 }
 
 .modal .modal-content {
-  pointer-events: auto;
+  pointer-events: none; /* Ahora nadie lo puede tocar mientras sea invisible */
   width: min(90vw, 400px);
   padding: 24px;
   border-radius: var(--modal-radius);
@@ -130,7 +130,11 @@ main {
   transition: all 0.3s cubic-bezier(.17,.67,.41,1.18);
 }
 
-.modal.show .modal-content { transform: scale(1); opacity: 1; }
+.modal.show .modal-content { 
+  transform: scale(1); 
+  opacity: 1; 
+  pointer-events: auto; /* Recién se puede tocar cuando aparece */
+}
 
 .btn-primary {
   margin-top: 15px;
